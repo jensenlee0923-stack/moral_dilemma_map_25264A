@@ -6,47 +6,80 @@
     <title>Class Philosophy Matrix</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Container to keep the chart responsive and centered */
-        .chart-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        /* General styling and layout wrapper */
+        body {
             font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .layout-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Allows stacking on smaller screens */
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+            align-items: flex-start;
+        }
+
+        /* Left Panel: The Explanation */
+        .left-panel {
+            flex: 1 1 450px; /* Takes up space, minimum width 450px before wrapping */
+            background-color: #f9f9f9; 
+            padding: 25px; 
+            border-radius: 8px; 
+            border: 1px solid #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .left-panel h3 {
+            margin-top: 0; 
+            color: #222;
+            font-size: 1.5em;
+        }
+        
+        .left-panel h4 {
+            color: #444;
+            margin-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Right Panel: The Chart */
+        .right-panel {
+            flex: 1 1 500px; /* Takes up space, minimum width 500px before wrapping */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
         }
-        
-        /* Styling for the explanation section below the chart */
-        .explanation-box {
-            text-align: left; 
-            background-color: #f9f9f9; 
-            padding: 20px; 
-            border-radius: 8px; 
-            margin-top: 30px; 
-            line-height: 1.6;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .explanation-box h3 {
-            margin-top: 0; 
-            color: #333;
-        }
-        
-        .explanation-box h4 {
-            color: #555;
+
+        .right-panel h2 {
+            margin-top: 0;
             margin-bottom: 5px;
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 650px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <div class="chart-container">
-        <h2>Moral Dilemma: Class 4A Alignment Matrix</h2>
-        <p>This chart anonymously maps the underlying philosophies driving our class's decisions.</p>
+    <div class="layout-wrapper">
         
-        <canvas id="philosophyMatrix"></canvas>
-
-        <div class="explanation-box">
+        <div class="left-panel">
             <h3>How to Read This Matrix 🧭</h3>
             <p>This chart maps out the different ways our class approached the ethical dilemmas. Each dot represents one student's underlying philosophy. Here is how to read the map:</p>
             
@@ -67,14 +100,25 @@
             </ul>
 
             <h4>2. The Four Quadrants (The Archetypes)</h4>
+            
             <ul>
                 <li>🟦 <strong>Top-Left: The Rationalists.</strong> <em>"Save the most life-years."</em> You looked at the objective data and focused on future efficiency to get the best mathematical outcome.</li>
-                <li>🟧 <strong>Top-Right: The System Architects.</strong> <em>"Protect the society."</em> You looked at human behavior and focused on the future stability of the whole system (often supporting lockdowns or economic planning).</li>
-                <li>🟩 <strong>Bottom-Left: The Egalitarians.</strong> <em>"Fairness means blindness."</em> You stuck to strict principles of equality and neutrality, believing it is not our place to judge who is "worth" more.</li>
-                <li>🟥 <strong>Bottom-Right: The Moral Arbiters.</strong> <em>"Good people deserve life."</em> You looked at the individual's past character and made decisions based on justice, merit, and protecting the innocent.</li>
+                <li>🟧 <strong>Top-Right: The System Architects.</strong> <em>"Protect the society."</em> You looked at human behavior and focused on the future stability of the whole system.</li>
+                <li>🟩 <strong>Bottom-Left: The Egalitarians.</strong> <em>"Fairness means blindness."</em> You stuck to strict principles of equality and neutrality.</li>
+                <li>🟥 <strong>Bottom-Right: The Moral Arbiters.</strong> <em>"Good people deserve life."</em> You looked at the individual's past character and made decisions based on justice and merit.</li>
             </ul>
             <p><em>Take a look at the clusters! Notice how heavily our class leans toward the top half (Outcomes/Future) compared to the bottom half. Check your personalized email to see which dot might be yours!</em></p>
         </div>
+
+        <div class="right-panel">
+            <h2>Moral Dilemma: Class Alignment Matrix</h2>
+            <p>This chart anonymously maps the underlying philosophies driving our class's decisions.</p>
+            
+            <div class="chart-container">
+                <canvas id="philosophyMatrix"></canvas>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -162,12 +206,11 @@
                         max: 10,
                         title: {
                             display: true,
-                            text: '⟵ Objective / Neutral (Blind to Past)   |   Subjective / Contextual (Considers History) ⟶',
+                            text: '⟵ Objective / Neutral   |   Subjective / Contextual ⟶',
                             font: { size: 14, weight: 'bold' }
                         },
                         grid: {
                             color: function(context) {
-                                // Make the center Y-axis line bold and black
                                 if (context.tick.value === 0) return '#000000';
                                 return '#e0e0e0';
                             },
@@ -176,19 +219,18 @@
                                 return 1;
                             }
                         },
-                        ticks: { display: false } // Hide the numbers to keep it abstract
+                        ticks: { display: false } 
                     },
                     y: {
                         min: -10,
                         max: 10,
                         title: {
                             display: true,
-                            text: '⟵ Principles / Past Focus   |   Outcomes / Future Focus ⟶',
+                            text: '⟵ Principles / Past   |   Outcomes / Future ⟶',
                             font: { size: 14, weight: 'bold' }
                         },
                         grid: {
                             color: function(context) {
-                                // Make the center X-axis line bold and black
                                 if (context.tick.value === 0) return '#000000';
                                 return '#e0e0e0';
                             },
@@ -197,7 +239,7 @@
                                 return 1;
                             }
                         },
-                        ticks: { display: false } // Hide the numbers
+                        ticks: { display: false }
                     }
                 }
             }
