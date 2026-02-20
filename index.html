@@ -6,57 +6,77 @@
     <title>Class Philosophy Matrix</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* General styling and layout wrapper */
+        /* Modern reset and typography */
         body {
-            font-family: Arial, sans-serif;
-            color: #333;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #4a5568;
+            background-color: #f4f7f6; /* Soft off-white background */
             margin: 0;
-            padding: 20px;
-            background-color: #ffffff;
+            padding: 40px 20px;
         }
 
+        /* Grid layout for robust responsiveness */
         .layout-wrapper {
-            display: flex;
-            flex-wrap: wrap; /* Allows stacking on smaller screens */
-            gap: 30px;
-            max-width: 1300px;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr; /* Right side slightly larger for the chart */
+            gap: 40px;
+            max-width: 1400px;
             margin: 0 auto;
-            align-items: flex-start;
+            align-items: start;
         }
 
-        /* Left Panel: The Explanation */
+        /* Responsive Breakpoint: Stack into 1 column on screens smaller than 1000px */
+        @media (max-width: 1000px) {
+            .layout-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Shared Card UI Styling */
+        .panel {
+            background-color: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Soft drop shadow */
+            border: 1px solid #edf2f7;
+        }
+
+        /* Left Panel Specifics */
         .left-panel {
-            flex: 1 1 450px; /* Takes up space, minimum width 450px before wrapping */
-            background-color: #f9f9f9; 
-            padding: 25px; 
-            border-radius: 8px; 
-            border: 1px solid #e0e0e0;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 1.05rem;
         }
 
         .left-panel h3 {
             margin-top: 0; 
-            color: #222;
-            font-size: 1.5em;
+            color: #1a202c;
+            font-size: 1.6em;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .left-panel h4 {
-            color: #444;
-            margin-bottom: 5px;
-            margin-top: 20px;
+            color: #2d3748;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            margin-top: 30px;
         }
 
-        ul {
-            padding-left: 20px;
+        .left-panel ul {
+            padding-left: 25px;
         }
 
-        li {
-            margin-bottom: 8px;
+        .left-panel li {
+            margin-bottom: 12px;
         }
 
-        /* Right Panel: The Chart */
+        .left-panel p {
+            margin-bottom: 15px;
+        }
+
+        /* Right Panel Specifics */
         .right-panel {
-            flex: 1 1 500px; /* Takes up space, minimum width 500px before wrapping */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -65,13 +85,21 @@
 
         .right-panel h2 {
             margin-top: 0;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            color: #1a202c;
+            font-size: 1.6em;
         }
 
+        .right-panel > p {
+            margin-bottom: 25px;
+            color: #718096;
+        }
+
+        /* Ensures the Chart.js canvas resizes beautifully */
         .chart-container {
             width: 100%;
-            max-width: 650px;
-            margin-top: 15px;
+            max-width: 700px;
+            position: relative;
         }
     </style>
 </head>
@@ -79,7 +107,7 @@
 
     <div class="layout-wrapper">
         
-        <div class="left-panel">
+        <div class="panel left-panel">
             <h3>How to Read This Matrix 🧭</h3>
             <p>This chart maps out the different ways our class approached the ethical dilemmas. Each dot represents one student's underlying philosophy. Here is how to read the map:</p>
             
@@ -107,10 +135,12 @@
                 <li>🟩 <strong>Bottom-Left: The Egalitarians.</strong> <em>"Fairness means blindness."</em> You stuck to strict principles of equality and neutrality.</li>
                 <li>🟥 <strong>Bottom-Right: The Moral Arbiters.</strong> <em>"Good people deserve life."</em> You looked at the individual's past character and made decisions based on justice and merit.</li>
             </ul>
-            <p><em>Take a look at the clusters! Notice how heavily our class leans toward the top half (Outcomes/Future) compared to the bottom half. Check your personalized email to see which dot might be yours!</em></p>
+            <p style="margin-top: 25px; font-style: italic; color: #4a5568;">
+                Take a look at the clusters! Notice how heavily our class leans toward the top half (Outcomes/Future) compared to the bottom half. Check your personalized email to see which dot might be yours!
+            </p>
         </div>
 
-        <div class="right-panel">
+        <div class="panel right-panel">
             <h2>Moral Dilemma: Class Alignment Matrix</h2>
             <p>This chart anonymously maps the underlying philosophies driving our class's decisions.</p>
             
@@ -131,10 +161,11 @@
             {x: -6, y: 7}, {x: -9, y: 5}, {x: -5, y: 9}, {x: -8, y: 6}
         ];
 
+        // Includes student 4A06
         const systemArchitectsData = [
             {x: 6, y: 8}, {x: 8, y: 6}, {x: 5, y: 9}, {x: 7, y: 7}, 
             {x: 9, y: 5}, {x: 4, y: 6}, {x: 8, y: 9}, {x: 6, y: 5}, 
-            {x: 7, y: 8}, {x: 5, y: 7}
+            {x: 7, y: 8}, {x: 5, y: 7}, {x: 8, y: 7} 
         ];
 
         const egalitariansData = [
@@ -197,7 +228,11 @@
                         }
                     },
                     legend: {
-                        position: 'bottom'
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: { family: "system-ui, sans-serif", size: 12 }
+                        }
                     }
                 },
                 scales: {
@@ -207,15 +242,16 @@
                         title: {
                             display: true,
                             text: '⟵ Objective / Neutral   |   Subjective / Contextual ⟶',
-                            font: { size: 14, weight: 'bold' }
+                            font: { family: "system-ui, sans-serif", size: 14, weight: 'bold' },
+                            padding: { top: 15 }
                         },
                         grid: {
                             color: function(context) {
-                                if (context.tick.value === 0) return '#000000';
-                                return '#e0e0e0';
+                                if (context.tick.value === 0) return '#cbd5e0';
+                                return '#edf2f7';
                             },
                             lineWidth: function(context) {
-                                if (context.tick.value === 0) return 2;
+                                if (context.tick.value === 0) return 3;
                                 return 1;
                             }
                         },
@@ -227,15 +263,16 @@
                         title: {
                             display: true,
                             text: '⟵ Principles / Past   |   Outcomes / Future ⟶',
-                            font: { size: 14, weight: 'bold' }
+                            font: { family: "system-ui, sans-serif", size: 14, weight: 'bold' },
+                            padding: { bottom: 15 }
                         },
                         grid: {
                             color: function(context) {
-                                if (context.tick.value === 0) return '#000000';
-                                return '#e0e0e0';
+                                if (context.tick.value === 0) return '#cbd5e0';
+                                return '#edf2f7';
                             },
                             lineWidth: function(context) {
-                                if (context.tick.value === 0) return 2;
+                                if (context.tick.value === 0) return 3;
                                 return 1;
                             }
                         },
