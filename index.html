@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Philosophy Matrix</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Container to keep the chart responsive and centered */
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        /* Styling for the explanation section below the chart */
+        .explanation-box {
+            text-align: left; 
+            background-color: #f9f9f9; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-top: 30px; 
+            line-height: 1.6;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .explanation-box h3 {
+            margin-top: 0; 
+            color: #333;
+        }
+        
+        .explanation-box h4 {
+            color: #555;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chart-container">
+        <h2>Moral Dilemma: Class 4A Alignment Matrix</h2>
+        <p>This chart anonymously maps the underlying philosophies driving our class's decisions.</p>
+        
+        <canvas id="philosophyMatrix"></canvas>
+
+        <div class="explanation-box">
+            <h3>How to Read This Matrix 🧭</h3>
+            <p>This chart maps out the different ways our class approached the ethical dilemmas. Each dot represents one student's underlying philosophy. Here is how to read the map:</p>
+            
+            <h4>1. The Axes (The Crosshairs)</h4>
+            <ul>
+                <li><strong>The Vertical Axis (Up & Down):</strong> This measures <em>what you focused on</em>.
+                    <ul>
+                        <li><strong>Top (Outcomes / Future):</strong> You focused on the results—maximizing survival, efficiency, and future societal stability.</li>
+                        <li><strong>Bottom (Principles / Past):</strong> You focused on strict moral rules, duty, and what people deserve based on their past actions.</li>
+                    </ul>
+                </li>
+                <li><strong>The Horizontal Axis (Left & Right):</strong> This measures <em>how you viewed the patient/citizen</em>.
+                    <ul>
+                        <li><strong>Left (Objective / Neutral):</strong> You treated people strictly as equals or medical data points, refusing to let their personal background bias your choice.</li>
+                        <li><strong>Right (Subjective / Contextual):</strong> You believed a person's character, history, or role in society is crucial information that cannot be ignored.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>2. The Four Quadrants (The Archetypes)</h4>
+            <ul>
+                <li>🟦 <strong>Top-Left: The Rationalists.</strong> <em>"Save the most life-years."</em> You looked at the objective data and focused on future efficiency to get the best mathematical outcome.</li>
+                <li>🟧 <strong>Top-Right: The System Architects.</strong> <em>"Protect the society."</em> You looked at human behavior and focused on the future stability of the whole system (often supporting lockdowns or economic planning).</li>
+                <li>🟩 <strong>Bottom-Left: The Egalitarians.</strong> <em>"Fairness means blindness."</em> You stuck to strict principles of equality and neutrality, believing it is not our place to judge who is "worth" more.</li>
+                <li>🟥 <strong>Bottom-Right: The Moral Arbiters.</strong> <em>"Good people deserve life."</em> You looked at the individual's past character and made decisions based on justice, merit, and protecting the innocent.</li>
+            </ul>
+            <p><em>Take a look at the clusters! Notice how heavily our class leans toward the top half (Outcomes/Future) compared to the bottom half. Check your personalized email to see which dot might be yours!</em></p>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('philosophyMatrix').getContext('2d');
+
+        // Organizing the anonymous data by Archetype (Quadrant)
+        const rationalistsData = [
+            {x: -8, y: 7}, {x: -6, y: 9}, {x: -7, y: 5}, {x: -9, y: 8}, 
+            {x: -5, y: 6}, {x: -8, y: 4}, {x: -4, y: 8}, {x: -7, y: 9}, 
+            {x: -6, y: 7}, {x: -9, y: 5}, {x: -5, y: 9}, {x: -8, y: 6}
+        ];
+
+        const systemArchitectsData = [
+            {x: 6, y: 8}, {x: 8, y: 6}, {x: 5, y: 9}, {x: 7, y: 7}, 
+            {x: 9, y: 5}, {x: 4, y: 6}, {x: 8, y: 9}, {x: 6, y: 5}, 
+            {x: 7, y: 8}, {x: 5, y: 7}
+        ];
+
+        const egalitariansData = [
+            {x: -8, y: -8}
+        ];
+
+        const moralArbitersData = [
+            {x: 7, y: -6}, {x: 5, y: -8}, {x: 8, y: -7}
+        ];
+
+        // Creating the Chart
+        new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    {
+                        label: 'The Rationalists (Top-Left)',
+                        data: rationalistsData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    },
+                    {
+                        label: 'The System Architects (Top-Right)',
+                        data: systemArchitectsData,
+                        backgroundColor: 'rgba(255, 159, 64, 0.7)', // Orange
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    },
+                    {
+                        label: 'The Egalitarians (Bottom-Left)',
+                        data: egalitariansData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)', // Teal
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    },
+                    {
+                        label: 'The Moral Arbiters (Bottom-Right)',
+                        data: moralArbitersData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)', // Red
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                aspectRatio: 1, // Keeps the chart perfectly square
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            // Customize tooltip to hide exact coordinates, keeping it abstract
+                            label: function(context) {
+                                return context.dataset.label.split(' (')[0]; 
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    x: {
+                        min: -10,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: '⟵ Objective / Neutral (Blind to Past)   |   Subjective / Contextual (Considers History) ⟶',
+                            font: { size: 14, weight: 'bold' }
+                        },
+                        grid: {
+                            color: function(context) {
+                                // Make the center Y-axis line bold and black
+                                if (context.tick.value === 0) return '#000000';
+                                return '#e0e0e0';
+                            },
+                            lineWidth: function(context) {
+                                if (context.tick.value === 0) return 2;
+                                return 1;
+                            }
+                        },
+                        ticks: { display: false } // Hide the numbers to keep it abstract
+                    },
+                    y: {
+                        min: -10,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: '⟵ Principles / Past Focus   |   Outcomes / Future Focus ⟶',
+                            font: { size: 14, weight: 'bold' }
+                        },
+                        grid: {
+                            color: function(context) {
+                                // Make the center X-axis line bold and black
+                                if (context.tick.value === 0) return '#000000';
+                                return '#e0e0e0';
+                            },
+                            lineWidth: function(context) {
+                                if (context.tick.value === 0) return 2;
+                                return 1;
+                            }
+                        },
+                        ticks: { display: false } // Hide the numbers
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
